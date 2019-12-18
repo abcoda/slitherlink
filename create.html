@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="create.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+</head>
+<body>
+    <form id="options">
+        <input id="w" value="1" min="1" type="number" placeholder="Width" onchange="setup()">
+        <input id="h" value="1" min="1" type="number" placeholder="Height" onchange="setup()">
+    </form>
+    <button onclick="convert()" type="button">Convert</button>
+    <table id="table">
+
+    </table>
+    <script>
+        window.onload = function() {
+            setup();
+        }
+        function setup() {
+            w = document.getElementById("w").value;
+            h = document.getElementById("h").value;
+
+            table = document.getElementById("table");
+            table.innerHTML = "";
+            for(j = 0; j < h; j++){
+                var row = document.createElement("tr");
+                for(i = 0; i < w; i++){
+                    var cell = document.createElement("td");
+                    var input = document.createElement("input");
+                    input.setAttribute("id", String(i) + String(j));
+                    input.setAttribute("class","cell");
+
+                    // alert(String(i) + String(j))
+                    cell.appendChild(input);
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
+        function convert(){
+            var arr = [];
+            table = document.getElementById("table");
+            w = document.getElementById("w").value;
+            h = document.getElementById("h").value;
+            for (var j = 0; j < h; j++) {
+                arr.push([]);
+                for (var i = 0; i < w; i++) {
+                    id = String(i)+String(j);
+                    val = Number(document.getElementById(id).value);
+                    if(val == "") {
+                        val = -1;
+                    }
+                    arr[j].push(val);
+                }
+                arr[j].push(-1);
+            }
+            arr.push([])
+            for (var i = 0; i <= w; i++){
+                arr[h].push(-1);
+            }
+            alert(JSON.stringify(arr))
+        }
+    </script>
+</body>
+</html>
